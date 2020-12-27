@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: TechVault
+spec:
+  selector:
+    matchLabels:
+      run: run-TechVault
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: run-TechVault
+    spec:
+      containers:
+        - name: TechVault
+          image: manishkumarkeshri/rest:hack1
+          ports:
+            - containerPort: 8080
+              protocol: TCP

@@ -1,0 +1,131 @@
+import org.gradle.internal.jvm.Jvm
+
+// Apply the java plugin to add support for Java
+buildscript {
+
+    // log the current JVM version.
+    println "Build JVM Version is : " + Jvm.current()
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url "https://oss.jfrog.org/jfrog-dependencies"
+        }
+        maven {
+            url "https://repository.apache.org/snapshots"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.org.nosphere.apache:creadur-rat-gradle:0.3.0"
+        classpath group: 'org.hidetake', name: 'gradle-ssh-plugin', version: gradleSshPluginVersion
+        classpath group: 'ru.vyarus', name: 'gradle-mkdocs-plugin', version: gradleMkdocsPluginVersion
+        classpath group: 'gradle.plugin.com.github.spotbugs', name: 'spotbugs-gradle-plugin', version: spotbugsPluginVersion
+        classpath "org.ajoberstar:grgit:${gradleGitPluginVersion}"
+        classpath "io.franzbecker:gradle-lombok:${gradleLombokPluginVersion}"
+        classpath "com.bmuschko:gradle-tomcat-plugin:${tomcatPluginVersion}"
+    }
+}
+
+if (project.hasProperty("enableMkdocs")) {
+    apply from: "$rootDir/gradle/mkdocs.gradle"
+}
+
+// apply the plugin outside of allProjects since the plugin attempts to set the grgit property for all the projects
+// https://github.com/ajoberstar/grgit/blob/master/src/main/groovy/org/ajoberstar/grgit/gradle/GrgitPlugin.groovy#L27
+apply plugin: 'org.ajoberstar.grgit'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+if (file("src/main/java").isDirectory()) {
+    apply plugin: 'java'
+    apply plugin: 'io.franzbecker.gradle-lombok'
+    lombok {
+        version = lombokVersion
+    }
+    dependencies {
+        //These are compile time only dependencies needed accross all targets. Lombok uses them and may generate strange errors if they are missing.
+        compileOnly group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: spotbugsAnnotationsVersion
+        testCompile group: 'com.github.spotbugs', name: 'spotbugs-annotations', version: spotbugsAnnotationsVersion
+    }
+}
+// Plugin configurations
+apply from: "$rootDir/gradle/application.gradle"
+apply from: "$rootDir/gradle/eclipse.gradle"
+apply from: "$rootDir/gradle/spotbugs.gradle"
+apply from: "$rootDir/gradle/idea.gradle"
+apply from: "$rootDir/gradle/java.gradle"
+apply from: "$rootDir/gradle/rat.gradle"
+
+repositories {
+    jcenter()
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        url "https://repository.apache.org/snapshots"
+    }
+    maven {
+        url "https://oss.jfrog.org/jfrog-dependencies"
+    }
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+}
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+group = "TechVault"
+
+configurations.all {
+    resolutionStrategy {
+        force "org.slf4j:slf4j-api:" + slf4jApiVersion
+        force "org.apache.commons:commons-lang3:" + commonsLang3Version
+    }
+}
+
+configurations {
+    all*.exclude group: '', module: 'servlet-api'
+}
+
+rat {
+    failOnError = false
+}
+
+apply plugin: 'com.bmuschko.tomcat-base'
+apply plugin: "war"
+
+dependencies {
+    compile group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: springSleuthVersion
+    compile group: 'junit', name :'junit', version: junitVersion
+    /**
+     * Micrometer library for metrics.
+     */
+    compile group: 'javax.el', name: 'javax.el-api', version: javaxElApiVersion
+    compile group: 'org.glassfish', name: 'javax.el', version: glassfishVersion
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: javaxServletVersion
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+
+def withoutLogger = {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    exclude group: 'org.slf4j', module: 'slf4j-simple'
+}
+
+task publishAllJars() {
+    dependsOn ':restgateway:publish'
+}
