@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Validated
 @RestController
-@RequestMapping("home")
+@RequestMapping("update")
 public class Updation {
     /**
      * To post a single like by a user.
