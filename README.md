@@ -5,4 +5,3 @@ TechVault is a website to browse through the engineering blogs of software compa
 ## Prerequisites
 
 - Java 8+
-
