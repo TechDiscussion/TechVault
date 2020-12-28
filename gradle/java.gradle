@@ -26,7 +26,7 @@ plugins.withId('java') {
         ])
     }
 
-    archivesBaseName = "pravega" + project.path.replace(':', '-')
+    archivesBaseName = "TechVault" + project.path.replace(':', '-')
 
     task sourceJar(type: Jar) {
         classifier = 'sources'

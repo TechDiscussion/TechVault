@@ -97,9 +97,6 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: springSleuthVersion
     compile group: 'junit', name :'junit', version: junitVersion
-    /**
-     * Micrometer library for metrics.
-     */
     compile group: 'javax.el', name: 'javax.el-api', version: javaxElApiVersion
     compile group: 'org.glassfish', name: 'javax.el', version: glassfishVersion
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: javaxServletVersion
@@ -114,5 +111,5 @@ def withoutLogger = {
 }
 
 task publishAllJars() {
-    dependsOn ':restgateway:publish'
+    dependsOn ':TechVault:publish'
 }

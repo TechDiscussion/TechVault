@@ -1,6 +1,5 @@
 package TechVault.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Validated
 @RestController
-@RequestMapping("v1/home")
+@RequestMapping("home")
 public class HomeInterface {
     /**
      * To get the home page sorted by likes in descending order.
@@ -43,7 +42,7 @@ public class HomeInterface {
      * To get the trending home page.
      * @return A Response entity which will have all the blogs to be loaded as home page.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/discussed")
+    @RequestMapping(method = RequestMethod.GET, value = "/trending")
     public ResponseEntity<?> getTrending() {
         return null;
     }

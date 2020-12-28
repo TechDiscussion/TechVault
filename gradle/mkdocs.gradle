@@ -24,7 +24,7 @@ remotes {
     webServer {
         host = hostname
         user = username
-        identity = file("$rootDir/pravegaio.pem")
+        identity = file("$rootDir/TechVaultio.pem")
     }
 }
 
@@ -33,7 +33,7 @@ task deploy {
     doLast {
         ssh.run {
             session(remotes.webServer) {
-                put from: "$rootDir/documentation/generated/$pravegaVersion", into: '/var/www/pravega.io/docs'
+                put from: "$rootDir/documentation/generated/$TechVaultVersion", into: '/var/www/TechVault.io/docs'
             }
         }
     }
