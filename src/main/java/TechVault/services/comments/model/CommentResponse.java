@@ -1,4 +1,4 @@
-package TechVault.services.comments;
+package TechVault.services.comments.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -1,13 +1,22 @@
 package TechVault.services.comments;
 
 import java.util.List;
+import java.util.UUID;
 
-import TechVault.services.comments.model.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class CommentActionsImpl implements CommentActions {
+import TechVault.services.comments.model.CommentResponse;
+import TechVault.services.comments.persistance.CommentDao;
+
+@Service
+public class CommentServiceImpl implements CommentService {
+
+    @Autowired
+    private CommentDao commentDao;
 
     @Override
-    public List<Comment> getComments(String postId) {
+    public List<CommentResponse> getComments(String postId) {
         // TODO Auto-generated method stub
         
         return null;
@@ -15,8 +24,7 @@ public class CommentActionsImpl implements CommentActions {
 
     @Override
     public void addComment(String postId, String userId, String comment) {
-        // TODO Auto-generated method stub
-
+        commentDao.addCommenttoBlog(postId, UUID.randomUUID().toString(), Long.valueOf(userId), comment);
     }
     
 }

@@ -18,13 +18,13 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Comment {
   @Id
   @Field(name = "commentId")
-  private UUID commentId;
+  private String commentId;
 
   @Field(name = "postId")
-  private UUID postId;
+  private String postId;
 
   @Field(name = "parentCommentId")
-  private UUID parentCommentId;
+  private String parentCommentId;
 
   @Field(name = "userId")
   private long userId;
