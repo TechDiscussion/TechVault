@@ -21,19 +21,12 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public String addCommenttoBlog(String blogUUID, String parentCommentId, long userId, String comment) {
-        // TODO Auto-generated method stub
-        System.out.println("inside commentDAO");
+    public String addComment(String contentId, String parentCommentId, String userName, String comment) {
         commentRepository.save(Comment.builder()
         .parentCommentId(parentCommentId)
-        .userId(userId)
-        .postId(blogUUID)
+        .userName(userName)
+        .contentId(contentId)
         .build());
-
-
-        System.out.println("printing............");
-
-        commentRepository.findAll().forEach(u -> System.out.println(u.getPostId()));
 
         return null;
     }

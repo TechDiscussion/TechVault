@@ -8,5 +8,5 @@ public interface CommentService {
     
     public List<CommentResponse> getComments (String postId);
 
-    public void addComment(String postId, String userId, String comment);
+    public void addComment(String contentId, String parentCommentId, String userName, String comment);
 }

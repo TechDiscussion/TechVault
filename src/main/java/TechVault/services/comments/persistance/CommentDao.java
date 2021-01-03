@@ -8,7 +8,7 @@ public interface CommentDao {
     
     public List<Comment> getCommentsByBlog(String blogUUID);
 
-    public String addCommenttoBlog(String blogUUID, String parentCommentId, long userId, String comment);
+    public String addComment(String contentId, String parentCommentId, String userName, String comment);
 
     
 }

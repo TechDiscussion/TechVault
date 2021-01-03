@@ -1,7 +1,6 @@
 package TechVault.services.comments.model;
 
 import java.sql.Timestamp;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
@@ -20,14 +19,14 @@ public class Comment {
   @Field(name = "commentId")
   private String commentId;
 
-  @Field(name = "postId")
-  private String postId;
+  @Field(name = "contentId")
+  private String contentId;
 
   @Field(name = "parentCommentId")
   private String parentCommentId;
 
-  @Field(name = "userId")
-  private long userId;
+  @Field(name = "userName")
+  private String userName;
 
   @JsonFormat(pattern = "yyyy-mm-dd'T'HH:mm:ss")
   @Field(name = "postedTime")

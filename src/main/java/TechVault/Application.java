@@ -19,5 +19,4 @@ public class  Application {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-
 }

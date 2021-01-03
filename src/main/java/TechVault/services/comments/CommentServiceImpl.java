@@ -23,8 +23,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void addComment(String postId, String userId, String comment) {
-        commentDao.addCommenttoBlog(postId, UUID.randomUUID().toString(), Long.valueOf(userId), comment);
+    public void addComment(String contentId, String parentCommentId, String userName, String comment) {
+        commentDao.addComment(contentId, parentCommentId, userName, comment);
     }
     
 }

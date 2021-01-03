@@ -1,4 +1,4 @@
-package TechVault.services.comments.persistance;
+package TechVault.config;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
 @Configuration
-public class CommentPersistenceConfig extends AbstractMongoClientConfiguration {
+public class PersistenceConfig extends AbstractMongoClientConfiguration {
  
     @Override
     protected String getDatabaseName() {
-        return "comments";
+        return "TechVault";
     }
  
     @Override
@@ -33,4 +33,5 @@ public class CommentPersistenceConfig extends AbstractMongoClientConfiguration {
     public Collection getMappingBasePackages() {
         return Collections.singleton("TechVault");
     }
+
 }
