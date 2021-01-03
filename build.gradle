@@ -43,6 +43,7 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: springBootVersion
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: springSleuthVersion
     compile group: 'javax.el', name: 'javax.el-api', version: javaxElApiVersion
     compile group: 'org.glassfish', name: 'javax.el', version: glassfishVersion
@@ -50,6 +51,12 @@ dependencies {
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+    compile 'org.mongodb:mongo-java-driver:3.12.7'
+    compile 'org.mongodb:mongodb-driver-core:3.12.7'
+    compile 'commons-cli:commons-cli:1.4'
+    compile 'com.google.guava:guava:30.1-jre'
+    compile 'org.mongodb:bson:4.1.1'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
 }
 
 task publishAllJars() {

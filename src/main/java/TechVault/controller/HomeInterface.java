@@ -1,15 +1,27 @@
 package TechVault.controller;
 
+import TechVault.service.user.UserService;
+import TechVault.service.user.response.ContentResponse;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 @Validated
 @RestController
 @RequestMapping("home")
 public class HomeInterface {
+
+    @Autowired
+    private UserService userService;
+
     /**
      * To get the home page sorted by likes in descending order.
      * @return A Response entity which will have all the blogs to be loaded as home page.
@@ -45,5 +57,13 @@ public class HomeInterface {
     @RequestMapping(method = RequestMethod.GET, value = "/trending")
     public ResponseEntity<?> getTrending() {
         return null;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{contentID}")
+    public ResponseEntity<?> getContent(@PathVariable String contentID) {
+        System.out.println("Entering get Content");
+        ContentResponse contentResponse = userService.getContent(contentID);
+        System.out.println("Content Response = " + contentResponse.getTitle());
+        return new ResponseEntity<>(contentResponse, HttpStatus.OK);
     }
 }
