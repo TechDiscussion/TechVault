@@ -59,11 +59,4 @@ public class HomeInterface {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{contentID}")
-    public ResponseEntity<?> getContent(@PathVariable String contentID) {
-        System.out.println("Entering get Content");
-        ContentResponse contentResponse = userService.getContent(contentID);
-        System.out.println("Content Response = " + contentResponse.getTitle());
-        return new ResponseEntity<>(contentResponse, HttpStatus.OK);
-    }
 }

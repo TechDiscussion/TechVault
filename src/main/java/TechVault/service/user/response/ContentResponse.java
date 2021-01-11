@@ -12,14 +12,10 @@ public class ContentResponse {
     private String source;
     private String timestamp;
 
-    @JsonIgnore
-    private HttpStatus status;
-
-    public ContentResponse(String title, String company, String datePosted, HttpStatus httpStatus) {
+    public ContentResponse(String title, String company, String datePosted) {
         this.title = title;
         this.source = company;
         this.timestamp = datePosted;
-        this.status = httpStatus;
     }
 
     public String getTitle() {
@@ -34,7 +30,4 @@ public class ContentResponse {
         return timestamp;
     }
 
-    public HttpStatus getStatus() {
-        return status;
-    }
 }

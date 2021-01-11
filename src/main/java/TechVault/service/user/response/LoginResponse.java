@@ -2,17 +2,17 @@ package TechVault.service.user.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-
 @Data
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserProfileResponse {
-    private final String userId;
-    private final List<ContentResponse> bookmarks;
+public class LoginResponse {
+    private String message;
 
     @JsonIgnore
-    private final HttpStatus status;
+    private HttpStatus status;
 }
