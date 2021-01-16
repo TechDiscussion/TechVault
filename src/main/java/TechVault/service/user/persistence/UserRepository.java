@@ -1,0 +1,11 @@
+package TechVault.service.user.persistence;
+
+import TechVault.service.user.model.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface UserRepository extends MongoRepository<User, String> {
+
+    public User findByEmail(String email);
+
+    public User findByUserId(String userId);
+}
