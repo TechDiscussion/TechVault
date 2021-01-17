@@ -1,4 +1,4 @@
-package TechVault.services.comments.persistance;
+package TechVault.services.comments.persistence;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ public interface CommentDao {
     
     public List<Comment> getCommentsByBlog(String blogUUID);
 
-    public String addComment(String contentId, String parentCommentId, String userName, String comment);
-
-    
+    public void addComment(String contentId, String parentCommentId, String userName, String comment);
+        
 }

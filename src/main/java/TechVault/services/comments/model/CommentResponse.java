@@ -1,29 +1,27 @@
 package TechVault.services.comments.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 
-import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
-@RequiredArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
 public class CommentResponse {
-    public CommentResponse(UUID randomUUID, UUID randomUUID2, long l, Timestamp timestamp) {
-	}
 
-	private UUID commentId;
-    private UUID postId;
-    private long userId;
-    private Timestamp postedTime;
+    public  CommentResponse (Comment comment ) {
+        this(comment.getCommentId(), comment.getContentId(), 
+        comment.getUserName(), comment.getPostedTime(), comment.getComment(), 
+        new ArrayList<>());
+    }
+
+	private String commentId;
+    private String contentId;
+    private String userName;
+    private String postedTime;
     private String comment;
     private List<CommentResponse> childComments;
-
-    @JsonIgnore
-    private HttpStatus status;
 }

@@ -1,5 +1,7 @@
 package TechVault.services.comments.controller;
 
+import java.util.List;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -11,18 +13,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import TechVault.services.comments.CommentService;
+import TechVault.services.comments.model.CommentResponse;
 
 @Validated
 @RestController
 @RequestMapping("comment")
 public class CommentController {
-    private static final Logger logger = LoggerFactory.getLogger("SampleLogger");
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommentController.class);
 
     @Autowired
     private CommentService commentService;
@@ -31,11 +35,16 @@ public class CommentController {
      * To the the profile of the user corresponding to the user id.
      * @return A Response entity which will have all the user details.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/{blog_id}")
-    public ResponseEntity<?> getCommentsForBlog() {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        //CommentResponse cr =  new CommentResponse(UUID.randomUUID(), UUID.randomUUID(),(long) 123, new Timestamp(System.currentTimeMillis()));
-        return new ResponseEntity<>( HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.GET, value = "/{contentId}")
+    public ResponseEntity<?> getComments(@PathVariable String contentId) {
+        List<CommentResponse> comments = null;
+        try {
+        comments = commentService.getComments(contentId);
+        } catch (Exception e) {
+            LOGGER.error("Unable to get comments ", e);
+            return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     /**
@@ -44,7 +53,7 @@ public class CommentController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/postComment", produces =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> postComment(@RequestBody String commentJson) {
-        //contentId, String parentCommentId, String userName, String comment
+
         JsonObject commentBody =  JsonParser.parseString(commentJson).getAsJsonObject();
         try {
             commentService.addComment(commentBody.get("contentId").getAsString(),
@@ -52,16 +61,10 @@ public class CommentController {
                 commentBody.get("userName").getAsString(),
                 commentBody.get("comment").getAsString());
         } catch (Exception e) {
-            logger.error("Error while posting comments", e);
+            LOGGER.error("Error while posting comments", e);
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/")
-    public ResponseEntity<?> test() {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        //CommentResponse cr =  new CommentResponse(UUID.randomUUID(), UUID.randomUUID(),(long) 123, new Timestamp(System.currentTimeMillis()));
-        return new ResponseEntity<>( "Hitting", HttpStatus.OK);
-    }
 }
