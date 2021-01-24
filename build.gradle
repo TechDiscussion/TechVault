@@ -43,7 +43,12 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: springBootVersion
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: springSleuthVersion
+    compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: springMongoDataVersion
+    compile group: 'org.mongodb', name: 'mongodb-driver-sync', version: javaMongoDriverVersion
+    compile group: 'com.google.code.gson', name: 'gson', version: gsonVersion
+    compile group: 'com.google.guava', name: 'guava', version: guavaVersion
     compile group: 'javax.el', name: 'javax.el-api', version: javaxElApiVersion
     compile group: 'org.glassfish', name: 'javax.el', version: glassfishVersion
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: javaxServletVersion
