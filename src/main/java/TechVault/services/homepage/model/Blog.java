@@ -36,4 +36,13 @@ public class Blog {
 
     @Field(name = "uuid")
     private String uuid;
+
+    @Field(name = "totalLikes")
+    private String likes;
+
+    @Field(name = "totalViews")
+    private String views;
+
+    @Field(name = "totalComments")
+    private String comments;
 }

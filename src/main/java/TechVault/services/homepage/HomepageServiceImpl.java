@@ -12,15 +12,16 @@ import org.springframework.stereotype.Service;
 public class HomepageServiceImpl implements  HomepageService {
     private static final int PAGESIZE = 10;
     private static final String DATE = "date";
-    private static final String DISCUSSED = "comment";
-    private static final String LIKED = "like";
+    private static final String DISCUSSED = "totalComments";
+    private static final String LIKED = "totalLikes";
+    private static final String VIEWED = "totalViews";
 
     @Autowired
     private HomepageDao homepageDao;
 
     @Override
     public List<Blog> getTrending(Integer pageNo) {
-        return null;
+        return getBlogs(pageNo, VIEWED);
     }
 
     @Override

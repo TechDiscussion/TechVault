@@ -18,7 +18,7 @@ public class HomepageDaoImpl implements HomepageDao {
 
     @Override
     public List<Blog> getBlog(Integer pageNo, Integer pageSize, String sortBy) {
-        Pageable pageable = PageRequest.of(0, pageSize,
+        Pageable pageable = PageRequest.of(pageNo, pageSize,
                 Sort.by(sortBy).descending());
         Page<Blog> page = repo.findAll(pageable);
 

@@ -58,7 +58,7 @@ public class HomepageController {
      * To get the latest home page.
      * @return A Response entity which will have all the blogs to be loaded as home page.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "")
+    @RequestMapping(method = RequestMethod.GET, value = "/latest")
     public ResponseEntity<?> getLatest(@RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
         try {
@@ -74,7 +74,7 @@ public class HomepageController {
      * To get the trending home page.
      * @return A Response entity which will have all the blogs to be loaded as home page.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/trending")
+    @RequestMapping(method = RequestMethod.GET, value = "")
     public ResponseEntity<?> getTrending(@RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
         try {
