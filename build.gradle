@@ -52,6 +52,7 @@ dependencies {
     compile group: 'javax.el', name: 'javax.el-api', version: javaxElApiVersion
     compile group: 'org.glassfish', name: 'javax.el', version: glassfishVersion
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: javaxServletVersion
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
