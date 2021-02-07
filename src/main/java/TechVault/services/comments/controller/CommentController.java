@@ -8,7 +8,6 @@ import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +38,7 @@ public class CommentController {
     public ResponseEntity<?> getComments(@PathVariable String contentId) {
         List<CommentResponse> comments = null;
         try {
-        comments = commentService.getComments(contentId);
+            comments = commentService.getComments(contentId);
         } catch (Exception e) {
             LOGGER.error("Unable to get comments ", e);
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
