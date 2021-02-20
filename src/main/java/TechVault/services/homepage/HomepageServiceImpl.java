@@ -3,6 +3,8 @@ package TechVault.services.homepage;
 import TechVault.services.homepage.model.Blog;
 import TechVault.services.homepage.model.CompanyCount;
 
+import TechVault.services.homepage.model.KeywordCount;
+import TechVault.services.homepage.persistence.KeywordCountDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -20,6 +22,9 @@ public class HomepageServiceImpl implements HomepageService {
 
     @Autowired
     private HomepageDao homepageDao;
+
+    @Autowired
+    private KeywordCountDao keywordCountDao;
 
     @Override
     public List<Blog> getTrending(Integer pageNo) {
@@ -53,5 +58,10 @@ public class HomepageServiceImpl implements HomepageService {
     @Override
     public List<CompanyCount> getBlogsCountByConference() {
         return homepageDao.getBlogsCountBy("$conference");
+    }
+
+    @Override
+    public List<KeywordCount> getContentByKeywordCount() {
+        return keywordCountDao.getSortedByFrequency();
     }
 }
