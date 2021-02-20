@@ -106,8 +106,8 @@ public class HomepageController {
     }
 
     /**
-     * To get count of blogs by company.
-     * @return A Response entity which will have all the blogs to be loaded as home page.
+     * To get frequency or count of keywords.
+     * @return A Response entity which will have all the keywords with their count.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/keywordsCount")
     public ResponseEntity<?> getKeywordsCount() {
