@@ -1,7 +1,5 @@
 package TechVault.services.comments.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

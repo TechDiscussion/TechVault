@@ -1,6 +1,8 @@
 package TechVault.services.homepage;
 
 import TechVault.services.homepage.model.Blog;
+import TechVault.services.homepage.model.CompanyCount;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import TechVault.services.homepage.persistence.HomepageDao;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HomepageServiceImpl implements  HomepageService {
+public class HomepageServiceImpl implements HomepageService {
     private static final int PAGESIZE = 10;
     private static final String DATE = "date";
     private static final String DISCUSSED = "totalComments";
@@ -41,5 +43,15 @@ public class HomepageServiceImpl implements  HomepageService {
 
     private List<Blog> getBlogs(Integer pageNo, String sortBy) {
         return homepageDao.getBlog(pageNo, PAGESIZE, sortBy);
+    }
+
+    @Override
+    public List<CompanyCount> getBlogsCountByCompany() {
+        return homepageDao.getBlogsCountBy("$company");
+    }
+
+    @Override
+    public List<CompanyCount> getBlogsCountByConference() {
+        return homepageDao.getBlogsCountBy("$conference");
     }
 }
