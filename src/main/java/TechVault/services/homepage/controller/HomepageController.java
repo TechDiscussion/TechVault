@@ -4,6 +4,7 @@ import TechVault.services.homepage.HomepageService;
 import TechVault.services.homepage.model.Blog;
 import TechVault.services.homepage.model.CompanyCount;
 
+import TechVault.services.homepage.model.KeywordCount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,5 +103,21 @@ public class HomepageController {
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(blogsCount, HttpStatus.OK);
+    }
+
+    /**
+     * To get frequency or count of keywords.
+     * @return A Response entity which will have all the keywords with their count.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/keywordsCount")
+    public ResponseEntity<?> getKeywordsCount() {
+        List<KeywordCount> keywordCounts = null;
+        try {
+            keywordCounts = service.getContentByKeywordCount();
+        } catch (Exception e) {
+            LOGGER.error("Unable to get blogs Count ", e);
+            return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(keywordCounts, HttpStatus.OK);
     }
 }
