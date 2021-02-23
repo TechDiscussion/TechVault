@@ -45,4 +45,10 @@ public class Blog {
 
     @Field(name = "totalComments")
     private String comments;
+
+    @Field(name = "keywords")
+    private List<String> keywords;
+
+    @Field(name = "type")
+    private String type;
 }
