@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
+
 @Document(collection = "blogs")
 @Builder
 @Getter
@@ -45,4 +47,10 @@ public class Blog {
 
     @Field(name = "totalComments")
     private String comments;
+
+    @Field(name = "keywords")
+    private List<String> keywords;
+
+    @Field(name = "type")
+    private String type;
 }
