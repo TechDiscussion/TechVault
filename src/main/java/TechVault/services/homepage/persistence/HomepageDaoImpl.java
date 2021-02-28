@@ -27,14 +27,14 @@ public class HomepageDaoImpl implements HomepageDao {
     }
 
     @Override
-    public List<Blog> getBlogByCompany(String companyName, Integer pageNo, Integer pageSize, String sortBy) {
+    public List<Blog> getBlogsByCompany(String companyName, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<Blog> page = repo.findByCompany(companyName, pageable);
         return page.getContent();
     }
 
     @Override
-    public List<Blog> getBlogByKeyword(String[] keyword, Integer pageNo, Integer pageSize, String sortBy) {
+    public List<Blog> getContentsByKeyword(String[] keyword, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<Blog> page = repo.findAnyOfTheseValues(keyword, pageable);
         return page.getContent();
