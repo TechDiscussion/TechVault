@@ -12,4 +12,7 @@ public interface HomepageDao {
 
     List<CompanyCount> getBlogsCountBy(String companyOrConference);
 
+    List<Blog> getBlogsByCompany(String companyName, Integer pageNo, Integer pageSize, String sortBy);
+
+    List<Blog> getContentsByKeyword(String[] keyword, Integer pageNo, Integer pageSize, String sortBy);
 }
