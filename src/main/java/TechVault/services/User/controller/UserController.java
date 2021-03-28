@@ -87,7 +87,7 @@ public class UserController {
             if (resetUser != null) {
                 SimpleMailMessage registrationEmail = new SimpleMailMessage();
                 registrationEmail.setTo(passwordForgotRequest.getEmail());
-                registrationEmail.setSubject("Temporary Password Sent From " + webServerUrl);
+                registrationEmail.setSubject("Temporary Password Sent From TechVault");
                 registrationEmail
                         .setText("To access your account, please use this temporary password:  " + resetUser.getPassword()
                                 + ".\r\nNOTE: This email was sent from an automated system. Please do not reply.");
