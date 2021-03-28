@@ -7,6 +7,7 @@ import TechVault.services.User.persistence.UserRepository;
 import TechVault.services.User.request.ChangePasswordRequest;
 import TechVault.services.User.request.PasswordForgotRequest;
 import TechVault.services.User.request.UserLoginRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -31,7 +33,6 @@ public class UserServiceImpl implements UserService {
         if (password.isEmpty()) {
             throw new InvalidArgumentException("Invalid password.");
         }
-
         if (user.getUserName().isEmpty()) {
             user.setUserName(user.getEmail());
         }
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
             throw new InvalidArgumentException(user.getUserName() + " already registered.");
         }
 
-        if (userRepository.findByEmail(user.getEmail()).get() != null) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new InvalidArgumentException(user.getEmail() + " already registered.");
         }
 
@@ -51,7 +52,6 @@ public class UserServiceImpl implements UserService {
         user.setId(RANDOM.nextLong());
         // Generate random 36-character string token for confirmation link
         user.setConfirmationToken(UUID.randomUUID().toString());
-
         userRepository.save(user);
 
         return true;
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User resetUser(PasswordForgotRequest passwordForgotRequest) {
 
-        User userExists = userRepository.findByEmail(passwordForgotRequest.getEmail()).get();
+        User userExists = userRepository.findByEmail(passwordForgotRequest.getEmail());
 
         if (userExists == null) {
             throw new InvalidArgumentException(passwordForgotRequest.getEmail() + " is not registered.");
@@ -117,26 +117,20 @@ public class UserServiceImpl implements UserService {
         }
         User userExists = null;
         if (userLoginRequest.getUserName() != null) {
-            userExists = userRepository.findByUserName(userExists.getUserName());
+            userExists = userRepository.findByUserName(userLoginRequest.getUserName());
         } else {
-            userExists = userRepository.findByEmail(userExists.getEmail()).get();
+            userExists = userRepository.findByEmail(userLoginRequest.getEmail());
         }
-
         if (userExists == null) {
             throw new InvalidArgumentException("Invalid user name.");
         }
-
         String password = userLoginRequest.getPassword();
         if (!password.equals(userExists.getPassword())) {
             throw new InvalidArgumentException("Invalid user name and password combination.");
         }
-
         if (userExists.getEmailVerified() == 0) {
             throw new InvalidArgumentException("The user is not enabled.");
         }
-
-        userExists.setPassword("");
-        userExists.setId(0L);
         return true;
     }
 
@@ -145,12 +139,11 @@ public class UserServiceImpl implements UserService {
         if (Objects.isNull(email)) {
             throw new AccessDeniedException("Invalid access");
         }
-
-        Optional<User> user = userRepository.findByEmail(email);
-        if (!user.isPresent()) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
             throw new ResourceNotFoundException("User not found");
         }
-        return user.get();
+        return user;
     }
 
     @Override
@@ -160,15 +153,6 @@ public class UserServiceImpl implements UserService {
         }
 
         return userRepository.save(user);
-    }
-
-    @Override
-    public User findByEmail(String email) {
-        if (Objects.isNull(email)) {
-            throw new InvalidArgumentException("Null email");
-        }
-
-        return userRepository.findByEmail(email).orElse(null);
     }
 
     @Override

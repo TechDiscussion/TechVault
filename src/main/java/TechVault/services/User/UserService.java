@@ -20,8 +20,6 @@ public interface UserService {
 
     void confirmUser(String token);
 
-    User findByEmail(String email);
-
     boolean loginUser(UserLoginRequest userLoginRequest) ;
 
     boolean userExistsByEmail(String email);
