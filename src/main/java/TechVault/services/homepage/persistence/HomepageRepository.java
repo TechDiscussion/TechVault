@@ -19,7 +19,7 @@ public interface HomepageRepository extends PagingAndSortingRepository<Blog, Int
     @Aggregation("{$group : { _id : ?0 , count : { $sum : 1}}}")
     List<CompanyCount> groupBlogsBy(String companyOrConference);
 
-    Page<Blog> findByCompany(String companyName, Pageable pageable);
+    Page<Blog> findByCompanyIn(List<String> companyName, Pageable pageable);
 
     @Query(value = "{ 'keywords' : {$all : [?0] }}")
     Page<Blog> findAnyOfTheseValues(String[] arrayValues, Pageable pageable);
