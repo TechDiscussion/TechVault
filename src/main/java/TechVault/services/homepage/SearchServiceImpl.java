@@ -16,12 +16,12 @@ public class SearchServiceImpl implements SearchService {
     private HomepageDao homepageDao;
 
     @Override
-    public List<Blog> searchByCompanyName(String companyName, Integer pageNo) {
-        return homepageDao.getBlogsByCompany(companyName, pageNo, PAGE_SIZE, LIKED);
+    public List<Blog> searchByCompanyNames(List<String> companyNames, Integer pageNo) {
+        return homepageDao.getBlogsByCompanies(companyNames, pageNo, PAGE_SIZE, LIKED);
     }
 
     @Override
-    public List<Blog> searchByKeyword(String keyword, Integer pageNo) {
-        return homepageDao.getContentsByKeyword(new String[]{keyword}, pageNo, PAGE_SIZE, LIKED);
+    public List<Blog> searchByKeywords(List<String> keywords, Integer pageNo) {
+        return homepageDao.getContentsByKeywords(keywords, pageNo, PAGE_SIZE, LIKED);
     }
 }

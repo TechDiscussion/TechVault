@@ -2,15 +2,17 @@ package TechVault.services.homepage.controller;
 
 import TechVault.services.homepage.SearchService;
 import TechVault.services.homepage.model.Blog;
+import TechVault.services.homepage.request.SearchByCompanyOrKeywordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -23,11 +25,12 @@ public class SearchController {
     /**
      * Search by company name.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/company/{companyName}")
-    public ResponseEntity<?> searchByCompanyName(@PathVariable String companyName, @RequestParam(defaultValue = "0") Integer pageNo) {
+    @RequestMapping(method = RequestMethod.GET, value = "/company")
+    public ResponseEntity<?> searchByCompanyName(@RequestBody @Valid SearchByCompanyOrKeywordRequest searchByCompanyOrKeywordRequest,
+                                                 @RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
         try {
-            blogs = service.searchByCompanyName(companyName, pageNo);
+            blogs = service.searchByCompanyNames(searchByCompanyOrKeywordRequest.getSearchWords(), pageNo);
         } catch (Exception e) {
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -37,11 +40,12 @@ public class SearchController {
     /**
      * Search by keyword.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/keyword/{keyword}")
-    public ResponseEntity<?> searchByKeyword(@PathVariable String keyword, @RequestParam(defaultValue = "0") Integer pageNo) {
+    @RequestMapping(method = RequestMethod.GET, value = "/keyword")
+    public ResponseEntity<?> searchByKeyword(@RequestBody @Valid SearchByCompanyOrKeywordRequest searchByCompanyOrKeywordRequest,
+                                             @RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
         try {
-            blogs = service.searchByKeyword(keyword, pageNo);
+            blogs = service.searchByKeywords(searchByCompanyOrKeywordRequest.getSearchWords(), pageNo);
         } catch (Exception e) {
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
         }

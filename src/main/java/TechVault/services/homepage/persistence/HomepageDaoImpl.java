@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -27,14 +28,14 @@ public class HomepageDaoImpl implements HomepageDao {
     }
 
     @Override
-    public List<Blog> getBlogsByCompany(String companyName, Integer pageNo, Integer pageSize, String sortBy) {
+    public List<Blog> getBlogsByCompanies(List<String> companyNames, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
-        Page<Blog> page = repo.findByCompany(companyName, pageable);
+        Page<Blog> page = repo.findByCompanyIn(companyNames, pageable);
         return page.getContent();
     }
 
     @Override
-    public List<Blog> getContentsByKeyword(String[] keyword, Integer pageNo, Integer pageSize, String sortBy) {
+    public List<Blog> getContentsByKeywords(List<String> keyword, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<Blog> page = repo.findAnyOfTheseValues(keyword, pageable);
         return page.getContent();
