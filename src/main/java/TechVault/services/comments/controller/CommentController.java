@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class CommentController {
      * To the the profile of the user corresponding to the user id.
      * @return A Response entity which will have all the user details.
      */
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/{contentId}")
     public ResponseEntity<?> getComments(@PathVariable String contentId) {
         List<CommentResponse> comments = null;
@@ -48,6 +50,7 @@ public class CommentController {
      * To the the profile of the user corresponding to the user id.
      * @return A Response entity which will have all the user details.
      */
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, value = "/postComment", produces =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> postComment(@RequestBody String commentJson) {
 
