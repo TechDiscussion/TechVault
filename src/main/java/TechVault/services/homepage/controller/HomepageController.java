@@ -27,6 +27,7 @@ public class HomepageController {
      * To get the home page sorted by likes in descending order.
      * @return A Response entity which will have all the blogs to be loaded as home page.
      */
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/liked")
     public ResponseEntity<?> getTopLiked(@RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
@@ -43,6 +44,7 @@ public class HomepageController {
      * To get the home page sorted by number of discussions in descending order.
      * @return A Response entity which will have all the blogs to be loaded as home page.
      */
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/discussed")
     public ResponseEntity<?> getTopDiscussed(@RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
@@ -60,6 +62,7 @@ public class HomepageController {
      * To get the latest home page.
      * @return A Response entity which will have all the blogs to be loaded as home page.
      */
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/latest")
     public ResponseEntity<?> getLatest(@RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
@@ -76,6 +79,7 @@ public class HomepageController {
      * To get the trending home page.
      * @return A Response entity which will have all the blogs to be loaded as home page.
      */
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "")
     public ResponseEntity<?> getTrending(@RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
@@ -92,6 +96,7 @@ public class HomepageController {
      * To get count of blogs by company.
      * @return A Response entity which will have all the blogs to be loaded as home page.
      */
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/blogsCount")
     public ResponseEntity<?> getBlogsCount() {
         List<CompanyCount> blogsCount = null;
@@ -108,6 +113,7 @@ public class HomepageController {
      * To get frequency or count of keywords.
      * @return A Response entity which will have all the keywords with their count.
      */
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/keywordsCount")
     public ResponseEntity<?> getKeywordsCount() {
         List<KeywordCount> keywordCounts = null;

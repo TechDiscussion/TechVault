@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +26,8 @@ public class SearchController {
     /**
      * Search by company name.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/company")
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, value = "/company")
     public ResponseEntity<?> searchByCompanyName(@RequestBody @Valid SearchByCompanyOrKeywordRequest searchByCompanyOrKeywordRequest,
                                                  @RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
@@ -40,7 +42,8 @@ public class SearchController {
     /**
      * Search by keyword.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/keyword")
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, value = "/keyword")
     public ResponseEntity<?> searchByKeyword(@RequestBody @Valid SearchByCompanyOrKeywordRequest searchByCompanyOrKeywordRequest,
                                              @RequestParam(defaultValue = "0") Integer pageNo) {
         List<Blog> blogs = null;
