@@ -4,6 +4,7 @@ import TechVault.services.User.model.User;
 import TechVault.services.User.request.ChangePasswordRequest;
 import TechVault.services.User.request.PasswordForgotRequest;
 import TechVault.services.User.request.UserLoginRequest;
+import TechVault.services.User.response.UserResponse;
 
 import java.nio.file.AccessDeniedException;
 
@@ -20,7 +21,11 @@ public interface UserService {
 
     void confirmUser(String token);
 
-    boolean loginUser(UserLoginRequest userLoginRequest) ;
+    String loginUser(UserLoginRequest userLoginRequest);
+
+    void logoutUser(String sessionId);
+
+    UserResponse getUser(String sessionId);
 
     boolean userExistsByEmail(String email);
 

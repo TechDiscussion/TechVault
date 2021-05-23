@@ -2,11 +2,14 @@ package TechVault.services.User;
 
 import TechVault.services.User.exception.InvalidArgumentException;
 import TechVault.services.User.exception.ResourceNotFoundException;
+import TechVault.services.User.model.Session;
 import TechVault.services.User.model.User;
+import TechVault.services.User.persistence.SessionRepository;
 import TechVault.services.User.persistence.UserRepository;
 import TechVault.services.User.request.ChangePasswordRequest;
 import TechVault.services.User.request.PasswordForgotRequest;
 import TechVault.services.User.request.UserLoginRequest;
+import TechVault.services.User.response.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,9 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SessionRepository sessionRepository;
 
     private static final Random RANDOM = new SecureRandom();
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -111,7 +117,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean loginUser(UserLoginRequest userLoginRequest) {
+    public String loginUser(UserLoginRequest userLoginRequest) {
         if (userLoginRequest.getEmail() == null && userLoginRequest.getUserName() == null) {
             throw new InvalidArgumentException("Required either email or user name.");
         }
@@ -131,7 +137,27 @@ public class UserServiceImpl implements UserService {
         if (userExists.getEmailVerified() == 0) {
             throw new InvalidArgumentException("The user is not enabled.");
         }
-        return true;
+
+        Long user_id = userExists.getId();
+        String sessionId = UUID.randomUUID().toString();
+        Session session = new Session();
+        session.setId(sessionId);
+        session.setUser_id(user_id);
+        sessionRepository.save(session);
+        return sessionId;
+    }
+
+    @Override
+    public void logoutUser(String sessionId) {
+        Session session = sessionRepository.findById(sessionId).get();
+        sessionRepository.delete(session);
+    }
+
+    @Override
+    public UserResponse getUser(String sessionId) {
+        Session session = sessionRepository.findById(sessionId).get();
+        User user = userRepository.findById(session.getUser_id()).get();
+        return new UserResponse(user.getUserName(), user.getEmailVerified());
     }
 
     @Override

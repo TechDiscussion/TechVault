@@ -7,6 +7,7 @@ import TechVault.services.User.request.ChangePasswordRequest;
 import TechVault.services.User.request.PasswordForgotRequest;
 import TechVault.services.User.request.RegisterUserRequest;
 import TechVault.services.User.request.UserLoginRequest;
+import TechVault.services.User.response.UserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,8 +74,27 @@ public class UserController {
     @PostMapping(path = "/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequest userLoginRequest) {
         try {
-            userService.loginUser(userLoginRequest);
-            return new ResponseEntity<>("Successful.", HttpStatus.OK);
+            return new ResponseEntity<>(userService.loginUser(userLoginRequest), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(path = "/logout")
+    public ResponseEntity<?> login(@RequestParam("sessionId") String sessionId) {
+        try {
+            userService.logoutUser(sessionId);
+            return new ResponseEntity<>("Successful", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(path = "/session")
+    public ResponseEntity<?> getUser(@RequestParam("sessionId") String sessionId) {
+        try {
+            UserResponse userResponse = userService.getUser(sessionId);
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
