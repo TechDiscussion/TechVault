@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/logout")
-    public ResponseEntity<?> login(@RequestParam("sessionId") String sessionId) {
+    public ResponseEntity<?> logout(@RequestParam("sessionId") String sessionId) {
         try {
             userService.logoutUser(sessionId);
             return new ResponseEntity<>("Successful", HttpStatus.OK);
