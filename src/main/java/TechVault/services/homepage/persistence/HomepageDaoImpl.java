@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -45,14 +46,14 @@ public class HomepageDaoImpl implements HomepageDao {
     @Override
     public List<CompanyCount> getBlogsCountByCompany() {
         List<CompanyCount> blogGroups = repo.groupBlogsByCompany(Sort.by(Sort.Order.desc("total")));
-        blogGroups.stream().filter((blogGroup) -> blogGroup.getCompany() != null);
+        blogGroups.sort(Comparator.comparing(CompanyCount::getCount).reversed()); //.filter((blogGroup) -> blogGroup.getCompany() != null);
         return blogGroups;
     }
 
     @Override
     public List<KeywordCount> getBlogsCountByKeywords() {
         List<KeywordCount> blogGroups = repo.groupBlogsByKeywords(Sort.by(Sort.Order.desc("total")));
-        blogGroups.stream().filter((blogGroup) -> blogGroup.getKeyword() != null);
+        blogGroups.sort(Comparator.comparing(KeywordCount::getCount).reversed());
         return blogGroups;
     }
 }
