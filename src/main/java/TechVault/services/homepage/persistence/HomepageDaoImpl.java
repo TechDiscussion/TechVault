@@ -52,7 +52,8 @@ public class HomepageDaoImpl implements HomepageDao {
 
     @Override
     public List<KeywordCount> getBlogsCountByKeywords() {
-        List<KeywordCount> blogGroups = repo.groupBlogsByKeywords(Sort.by(Sort.Order.desc("total")));
+        List<KeywordCount> blogGroups = repo.groupBlogsByKeywords();
+        blogGroups.removeIf(blogGroup -> blogGroup.getCount() < 30);
         blogGroups.sort(Comparator.comparing(KeywordCount::getCount).reversed());
         return blogGroups;
     }
