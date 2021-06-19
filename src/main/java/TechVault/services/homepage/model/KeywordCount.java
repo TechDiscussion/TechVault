@@ -1,19 +1,21 @@
 package TechVault.services.homepage.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "keyword_counts")
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
 public class KeywordCount {
-    @Field(name = "keyword")
+    @Id
     private String keyword;
 
-    @Field(name = "frequency")
-    private int frequency;
+    private long count;
+
 }

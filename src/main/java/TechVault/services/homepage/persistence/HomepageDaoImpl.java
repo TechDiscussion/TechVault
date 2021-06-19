@@ -3,6 +3,7 @@ package TechVault.services.homepage.persistence;
 import TechVault.services.homepage.model.Blog;
 import TechVault.services.homepage.model.CompanyCount;
 
+import TechVault.services.homepage.model.KeywordCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,9 +43,16 @@ public class HomepageDaoImpl implements HomepageDao {
     }
 
     @Override
-    public List<CompanyCount> getBlogsCountBy(String companyOrConference) {
-        List<CompanyCount> blogGroups = repo.groupBlogsBy(companyOrConference);
+    public List<CompanyCount> getBlogsCountByCompany() {
+        List<CompanyCount> blogGroups = repo.groupBlogsByCompany(Sort.by(Sort.Order.desc("total")));
         blogGroups.stream().filter((blogGroup) -> blogGroup.getCompany() != null);
+        return blogGroups;
+    }
+
+    @Override
+    public List<KeywordCount> getBlogsCountByKeywords() {
+        List<KeywordCount> blogGroups = repo.groupBlogsByKeywords(Sort.by(Sort.Order.desc("total")));
+        blogGroups.stream().filter((blogGroup) -> blogGroup.getKeyword() != null);
         return blogGroups;
     }
 }

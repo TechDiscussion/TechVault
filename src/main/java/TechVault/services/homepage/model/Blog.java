@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
-@Document(collection = "blogs")
+@Document(collection = "contents")
 @Builder
 @Getter
 @Setter

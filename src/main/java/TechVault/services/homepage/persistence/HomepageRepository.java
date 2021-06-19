@@ -4,8 +4,10 @@ import TechVault.services.homepage.model.Blog;
 
 import java.util.List;
 
+import TechVault.services.homepage.model.KeywordCount;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -16,8 +18,11 @@ import TechVault.services.homepage.model.CompanyCount;
 @Repository
 public interface HomepageRepository extends PagingAndSortingRepository<Blog, Integer> {
     
-    @Aggregation("{$group : { _id : ?0 , count : { $sum : 1}}}")
-    List<CompanyCount> groupBlogsBy(String companyOrConference);
+    @Aggregation("{$group : { _id : ?company , count : { $sum : 1}}}")
+    List<CompanyCount> groupBlogsByCompany(Sort sort);
+
+    @Aggregation("{$group : { _id : ?company , { $unwind : { path : 'keywords' }, count : { $sum : 1}}}")
+    List<KeywordCount> groupBlogsByKeywords(Sort sort);
 
     Page<Blog> findByCompanyIn(List<String> companyName, Pageable pageable);
 
