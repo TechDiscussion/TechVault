@@ -18,10 +18,10 @@ import TechVault.services.homepage.model.CompanyCount;
 @Repository
 public interface HomepageRepository extends PagingAndSortingRepository<Blog, Integer> {
     
-    @Aggregation("{$group : { _id : ?company , count : { $sum : 1}}}")
+    @Aggregation("{$group : { _id : $company , count : { $sum : 1}}}")
     List<CompanyCount> groupBlogsByCompany(Sort sort);
 
-    @Aggregation("{$group : { _id : ?company , { $unwind : { path : 'keywords' }, count : { $sum : 1}}}")
+    @Aggregation("{$group : { _id : $keyword , { $unwind : { path : 'keywords' }, count : { $sum : 1}}}")
     List<KeywordCount> groupBlogsByKeywords(Sort sort);
 
     Page<Blog> findByCompanyIn(List<String> companyName, Pageable pageable);

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class HomepageServiceImpl implements HomepageService {
-    private static final int PAGESIZE = 10;
+    private static final int PAGESIZE = 20;
     private static final String DATE = "date";
     private static final String DISCUSSED = "totalComments";
     private static final String LIKED = "totalLikes";
