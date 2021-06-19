@@ -21,7 +21,7 @@ public interface HomepageRepository extends PagingAndSortingRepository<Blog, Int
     @Aggregation("{$group : { _id : $company , count : { $sum : 1}}}")
     List<CompanyCount> groupBlogsByCompany(Sort sort);
 
-    @Aggregation("{$group : { _id : {$arrayElemAt : [$keywords, 0] , $arrayElemAt : [$keywords, 1], $arrayElemAt : [$keywords, 2]} , count : { $sum : 1}}}")
+    @Aggregation("{$group : { _id : {$arrayElemAt : [$keywords, 0] , $arrayElemAt : [$keywords, 1]} , count : { $sum : 1}}}")
     List<KeywordCount> groupBlogsByKeywords();
 
     Page<Blog> findByCompanyIn(List<String> companyName, Pageable pageable);
