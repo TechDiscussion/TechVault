@@ -9,19 +9,19 @@ import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-    private static final int PAGE_SIZE = 10;
-    private static final String LIKED = "totalLikes";
+    private static final int PAGE_SIZE = 20;
+    private static final String DATE = "date";
 
     @Autowired
     private HomepageDao homepageDao;
 
     @Override
     public List<Blog> searchByCompanyNames(List<String> companyNames, Integer pageNo) {
-        return homepageDao.getBlogsByCompanies(companyNames, pageNo, PAGE_SIZE, LIKED);
+        return homepageDao.getBlogsByCompanies(companyNames, pageNo, PAGE_SIZE, DATE);
     }
 
     @Override
     public List<Blog> searchByKeywords(List<String> keywords, Integer pageNo) {
-        return homepageDao.getContentsByKeywords(keywords, pageNo, PAGE_SIZE, LIKED);
+        return homepageDao.getContentsByKeywords(keywords, pageNo, PAGE_SIZE, DATE);
     }
 }

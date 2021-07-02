@@ -18,7 +18,5 @@ public interface HomepageService {
 
     List<CompanyCount> getBlogsCountByCompany();
 
-    List<CompanyCount> getBlogsCountByConference();
-
     List<KeywordCount> getContentByKeywordCount();
 }
