@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface HomepageDao {
 
-    List<Blog> getBlog(Integer pageNo, Integer pageSize, String sortBy);
+    List<Blog> getBlog(Integer pageNo, String type, Integer pageSize, String sortBy);
 
     List<CompanyCount> getBlogsCountByCompany();
 
     List<KeywordCount> getBlogsCountByKeywords();
 
-    List<Blog> getBlogsByCompanies(List<String> companyName, Integer pageNo, Integer pageSize, String sortBy);
+    List<Blog> getBlogsByCompanies(List<String> companyName, String type, Integer pageNo, Integer pageSize, String sortBy);
 
-    List<Blog> getContentsByKeywords(List<String> keyword, Integer pageNo, Integer pageSize, String sortBy);
+    List<Blog> getContentsByKeywords(List<String> keyword, String type, Integer pageNo, Integer pageSize, String sortBy);
 }

@@ -29,10 +29,11 @@ public class HomepageController {
      */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/liked")
-    public ResponseEntity<?> getTopLiked(@RequestParam(defaultValue = "0") Integer pageNo) {
+    public ResponseEntity<?> getTopLiked(@RequestParam(defaultValue = "0") Integer pageNo,
+                                         @RequestParam(defaultValue = "all") String type) {
         List<Blog> blogs = null;
         try {
-            blogs = service.getTopLiked(pageNo);
+            blogs = service.getTopLiked(pageNo, type);
         } catch (Exception e) {
             LOGGER.error("Unable to get blogs ", e);
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -46,10 +47,11 @@ public class HomepageController {
      */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/discussed")
-    public ResponseEntity<?> getTopDiscussed(@RequestParam(defaultValue = "0") Integer pageNo) {
+    public ResponseEntity<?> getTopDiscussed(@RequestParam(defaultValue = "0") Integer pageNo,
+                                             @RequestParam(defaultValue = "all") String type) {
         List<Blog> blogs = null;
         try {
-            blogs = service.getTopDiscussed(pageNo);
+            blogs = service.getTopDiscussed(pageNo, type);
         } catch (Exception e) {
             LOGGER.error("Unable to get blogs ", e);
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -64,10 +66,11 @@ public class HomepageController {
      */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/latest")
-    public ResponseEntity<?> getLatest(@RequestParam(defaultValue = "0") Integer pageNo) {
+    public ResponseEntity<?> getLatest(@RequestParam(defaultValue = "0") Integer pageNo,
+                                       @RequestParam(defaultValue = "all") String type) {
         List<Blog> blogs = null;
         try {
-            blogs = service.getLatest(pageNo);
+            blogs = service.getLatest(pageNo, type);
         } catch (Exception e) {
             LOGGER.error("Unable to get blogs ", e);
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,10 +84,11 @@ public class HomepageController {
      */
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "")
-    public ResponseEntity<?> getTrending(@RequestParam(defaultValue = "0") Integer pageNo) {
+    public ResponseEntity<?> getTrending(@RequestParam(defaultValue = "0") Integer pageNo,
+                                         @RequestParam(defaultValue = "all") String type) {
         List<Blog> blogs = null;
         try {
-            blogs = service.getTrending(pageNo);
+            blogs = service.getTrending(pageNo, type);
         } catch (Exception e) {
             LOGGER.error("Unable to get blogs ", e);
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);

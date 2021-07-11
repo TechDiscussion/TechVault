@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface HomepageService {
 
-    public List<Blog> getTrending(Integer pageNo);
+    public List<Blog> getTrending(Integer pageNo, String type);
 
-    public List<Blog> getLatest(Integer pageNo);
+    public List<Blog> getLatest(Integer pageNo, String type);
 
-    public List<Blog> getTopDiscussed(Integer pageNo);
+    public List<Blog> getTopDiscussed(Integer pageNo, String type);
 
-    public List<Blog> getTopLiked(Integer pageNo);
+    public List<Blog> getTopLiked(Integer pageNo, String type);
 
     List<CompanyCount> getBlogsCountByCompany();
 

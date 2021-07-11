@@ -23,27 +23,27 @@ public class HomepageServiceImpl implements HomepageService {
     private HomepageDao homepageDao;
 
     @Override
-    public List<Blog> getTrending(Integer pageNo) {
-        return getBlogs(pageNo, VIEWED);
+    public List<Blog> getTrending(Integer pageNo, String type) {
+        return getBlogs(pageNo, type, VIEWED);
     }
 
     @Override
-    public List<Blog> getLatest(Integer pageNo) {
-        return getBlogs(pageNo, DATE);
+    public List<Blog> getLatest(Integer pageNo, String type) {
+        return getBlogs(pageNo, type, DATE);
     }
 
     @Override
-    public List<Blog> getTopDiscussed(Integer pageNo) {
-        return getBlogs(pageNo, DISCUSSED);
+    public List<Blog> getTopDiscussed(Integer pageNo, String type) {
+        return getBlogs(pageNo, type, DISCUSSED);
     }
 
     @Override
-    public List<Blog> getTopLiked(Integer pageNo) {
-        return getBlogs(pageNo, LIKED);
+    public List<Blog> getTopLiked(Integer pageNo, String type) {
+        return getBlogs(pageNo, type, LIKED);
     }
 
-    private List<Blog> getBlogs(Integer pageNo, String sortBy) {
-        return homepageDao.getBlog(pageNo, PAGESIZE, sortBy);
+    private List<Blog> getBlogs(Integer pageNo, String type, String sortBy) {
+        return homepageDao.getBlog(pageNo, type, PAGESIZE, sortBy);
     }
 
     @Override
