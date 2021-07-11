@@ -29,10 +29,11 @@ public class SearchController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, value = "/company")
     public ResponseEntity<?> searchByCompanyName(@RequestBody @Valid SearchByCompanyOrKeywordRequest searchByCompanyOrKeywordRequest,
-                                                 @RequestParam(defaultValue = "0") Integer pageNo) {
+                                                 @RequestParam(defaultValue = "0") Integer pageNo,
+                                                 @RequestParam(defaultValue = "all") String type) {
         List<Blog> blogs = null;
         try {
-            blogs = service.searchByCompanyNames(searchByCompanyOrKeywordRequest.getSearchWords(), pageNo);
+            blogs = service.searchByCompanyNames(searchByCompanyOrKeywordRequest.getSearchWords(), type, pageNo);
         } catch (Exception e) {
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -45,10 +46,11 @@ public class SearchController {
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, value = "/keyword")
     public ResponseEntity<?> searchByKeyword(@RequestBody @Valid SearchByCompanyOrKeywordRequest searchByCompanyOrKeywordRequest,
-                                             @RequestParam(defaultValue = "0") Integer pageNo) {
+                                             @RequestParam(defaultValue = "0") Integer pageNo,
+                                             @RequestParam(defaultValue = "all") String type) {
         List<Blog> blogs = null;
         try {
-            blogs = service.searchByKeywords(searchByCompanyOrKeywordRequest.getSearchWords(), pageNo);
+            blogs = service.searchByKeywords(searchByCompanyOrKeywordRequest.getSearchWords(), type, pageNo);
         } catch (Exception e) {
             return new ResponseEntity<>("ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
         }

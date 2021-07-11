@@ -22,24 +22,38 @@ public class HomepageDaoImpl implements HomepageDao {
     private HomepageRepository repo;
 
     @Override
-    public List<Blog> getBlog(Integer pageNo, Integer pageSize, String sortBy) {
-        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
-        Page<Blog> page = repo.findAll(pageable);
-
+    public List<Blog> getBlog(Integer pageNo, String type, Integer pageSize, String sortBy) {
+        Pageable pageable = pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        Page<Blog> page;
+        if (type.equals("all")) {
+            page = repo.findAll(pageable);
+        } else {
+            page = repo.findByType(type, pageable);
+        }
         return page.getContent();
     }
 
     @Override
-    public List<Blog> getBlogsByCompanies(List<String> companyNames, Integer pageNo, Integer pageSize, String sortBy) {
+    public List<Blog> getBlogsByCompanies(List<String> companyNames, String type, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
-        Page<Blog> page = repo.findByCompanyIn(companyNames, pageable);
+        Page<Blog> page = null;
+        if (type.equals("all")) {
+            page = repo.findByCompanyIn(companyNames, pageable);
+        } else {
+            page = repo.findByTypeAndCompanyIn(type, companyNames, pageable);
+        }
         return page.getContent();
     }
 
     @Override
-    public List<Blog> getContentsByKeywords(List<String> keyword, Integer pageNo, Integer pageSize, String sortBy) {
+    public List<Blog> getContentsByKeywords(List<String> keyword, String type, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
-        Page<Blog> page = repo.findAnyOfTheseValues(keyword, pageable);
+        Page<Blog> page = null;
+        if (type.equals("all")) {
+            page = repo.findAnyOfTheseValues(keyword, pageable);
+        } else {
+            page = repo.findByTypeAndAnyOfTheseValues(keyword, type, pageable);
+        }
         return page.getContent();
     }
 

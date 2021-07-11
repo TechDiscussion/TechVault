@@ -26,6 +26,13 @@ public interface HomepageRepository extends PagingAndSortingRepository<Blog, Int
 
     Page<Blog> findByCompanyIn(List<String> companyName, Pageable pageable);
 
+    Page<Blog> findByTypeAndCompanyIn(String type, List<String> companyName, Pageable pageable);
+
+    Page<Blog> findByType(String type, Pageable pageable);
+
     @Query(value = "{ 'keywords' : {$all : [?0] }}")
     Page<Blog> findAnyOfTheseValues(List<String> arrayValues, Pageable pageable);
+
+    @Query(value = "{$and: [{ 'keywords' : {$all : [?0] }}, { 'type' : ?1}]}")
+    Page<Blog> findByTypeAndAnyOfTheseValues(List<String> arrayValues, String type, Pageable pageable);
 }
